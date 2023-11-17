@@ -3,7 +3,6 @@ from pydantic import BaseModel, field_validator
 from datetime import datetime
 
 
-
 class HistoricosPagosAdelantadosScheme(BaseModel):
     id: int
     monto_deuda_recuperado_dia_T_pago_ad: float
@@ -20,13 +19,14 @@ class AjustesLiquidacionesProveedoresPagosAdelantadosInputScheme(BaseModel):
     sumatoria_conceptos_ajustes_transaccion: float
     total_pago_adelantando: float
     historico_pagos_adelantados: Optional[List[HistoricosPagosAdelantadosScheme]]
-    
-    @field_validator('sumatoria_conceptos_ajustes_transaccion')
+    lista_tupla_ajuste_transaccion_abono: Optional[List[tuple]] = None
+
+    @field_validator("sumatoria_conceptos_ajustes_transaccion")
     def convert_to_negative(cls, v):
         if v > 0:
             return -v
         return v
-    
-    @field_validator('total_pago_adelantando')
+
+    @field_validator("total_pago_adelantando")
     def convert_to_non_negative(cls, v):
         return abs(v)
