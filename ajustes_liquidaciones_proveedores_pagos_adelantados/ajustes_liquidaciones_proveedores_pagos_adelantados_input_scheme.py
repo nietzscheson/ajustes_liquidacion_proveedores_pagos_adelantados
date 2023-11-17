@@ -4,22 +4,22 @@ from datetime import datetime
 
 
 
-class HistoricosPagosAdelantados(BaseModel):
+class HistoricosPagosAdelantadosScheme(BaseModel):
     id: int
     monto_deuda_recuperado_dia_T_pago_ad: float
     monto_deuda_pendiente_nueva_pago_ad: float
-    id_pago_adelantado: float
+    id_pago_adelantado: int
     fecha_modificacion: datetime
 
 
-class AjustesLiquidacionesProveedoresPagosAdelantadosInput(BaseModel):
+class AjustesLiquidacionesProveedoresPagosAdelantadosInputScheme(BaseModel):
     suma_conceptos_ajuste_transaccion_abono: float
     compensacion_actual: float
     suma_conceptos_ajuste_transaccion_cargo: float
     total_liquidar_actual: float
     sumatoria_conceptos_ajustes_transaccion: float
     total_pago_adelantando: float
-    historico_pagos_adelantados: Optional[List[HistoricosPagosAdelantados]]
+    historico_pagos_adelantados: Optional[List[HistoricosPagosAdelantadosScheme]]
     
     @field_validator('sumatoria_conceptos_ajustes_transaccion')
     def convert_to_negative(cls, v):
